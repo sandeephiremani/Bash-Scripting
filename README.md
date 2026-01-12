@@ -66,3 +66,115 @@ chmod +x script.sh
 - chmod +x script.sh → Providing the 777 permission to execute the script
 - ./script.sh → Executing the script 
 
+## Bash Variables
+In Bash (Linux shell), variables are used to store data (text or numbers) that can be reused in scripts or commands.
+
+Like in the other programming languages , you can variable in Bash Scripting  as well. However, there are no data types.
+
+### Creating a Variable
+In Bash, you assign a value without spaces around `=` .
+```bash
+name="Alice"
+age=25
+```
+### Using a Variable
+
+Use `$` before the variable
+```bash
+echo $name
+echo $age
+```
+**Output:**
+```text
+Alice
+25
+```
+### Variable types in bash
+Bash does **not require declaring types**. All variables are treated as strings by default
+
+```bash
+x=10
+y=5
+echo $x$y
+```
+**Output:**
+```text
+105
+```
+### Read Input into a variable 
+use `read` to take input from the user.
+
+```bash
+read -p "Enter your name: " username
+echo "Hello, $username"
+```
+
+##  🧐 Variable scope
+### What is variable scope?
+Variable scope defines where a variable can be accessed or used in a script.
+
+In Bash, there are mainly two scopes:
+    
+1. Global scope
+2. Local scope (inside functions)
+
+⚠️ Important: Bash does not have block scope (like if, for, while). Scope is mainly determined by functions.
+
+### What Is a Global Variable?
+
+**A global variable is a variable that:**
+1. Is declared outside of any function
+2. Can be accessed anywhere in the script
+3. Can be accessed inside functions unless overridden
+
+Example:
+```bash
+#!/bin/bash
+name="Alice" # Global variable
+
+greet(){
+    echo "Hello, $name"
+}
+
+echo "$name"
+greet
+```
+In the above example, we created a global variable and assigned a value to it. The same global variable is accessed both inside and outside the function, which demonstrates that the variable is globally accessible.
+
+**Output:**
+```text
+Alice
+Hello, Alice
+```
+### Global Variables Modified Inside Functions
+In Bash, **functions can modify global variables.**
+```bash
+#!/bin/bash
+count=10 #Global variable
+
+increase(){
+    count 20 #Modified global variable
+}
+
+echo "Before modifying the global variable $count"
+increase
+echo "After modifying the global variable $count"
+```
+
+**Output:**
+```text
+Before modifying the global variable 10
+After modifying the global variable 20
+```
+
+### Special Bash variables 
+| **Variable**  | **Meaning**                        |
+| --------- | --------------------------- |
+| `$0`      | Script name                 |
+| `$1` `$2` | Script arguments            |
+| `$#`      | Number of arguments         |
+| `$@`      | All arguments               |
+| `$?`      | Exit status of last command |
+| `$$`      | Process ID                  |
+
+
