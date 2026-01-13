@@ -120,7 +120,7 @@ In Bash, there are mainly two scopes:
 
 ⚠️ Important: Bash does not have block scope (like if, for, while). Scope is mainly determined by functions.
 
-### What Is a Global Variable?
+### What is a Global Variable?
 
 **A global variable is a variable that:**
 1. Is declared outside of any function
@@ -167,7 +167,38 @@ Before modifying the global variable 10
 After modifying the global variable 20
 ```
 
-### Special Bash variables 
+### What is Local Variables?
+A local variables is a variables that **exists only inside a function/method**.
+It is not accessible **outside the function/method.**
+
+### How to Declare Local variable
+use the `local` keyword inside a function.
+**Example**
+```bash
+#!/bin/bash
+
+localfunction(){
+    local name="Alice"
+    echo "Inside function: $name"
+}
+localfunction 
+echo "Outside function : $name"
+```
+
+**Output:**
+```text
+Inside function: Alice
+Outside function:
+```
+**Explanation** 
+- `name` exists **Only inside the function** `localfunction`
+- Outside the function, `name` is undefined
+
+### What is Environment Variable
+
+
+
+### Special Bash variables
 | **Variable**  | **Meaning**                        |
 | --------- | --------------------------- |
 | `$0`      | Script name                 |
@@ -176,5 +207,14 @@ After modifying the global variable 20
 | `$@`      | All arguments               |
 | `$?`      | Exit status of last command |
 | `$$`      | Process ID                  |
+
+### 🗝️ Comparison between Local Variable, Global Variable and Environment Variable 
+| Feature                  | Local Variable       | Global Variable | Environment Variable    |
+| ------------------------ | -------------------- | --------------- | ----------------------- |
+| Scope                    | Inside function only | Entire script   | Shell + child processes |
+| Keyword                  | `local`              | None            | `export`                |
+| Available to child shell | ❌ No                 | ❌ No            | ✅ Yes                   |
+| Example                  | `local x=5`          | `x=5`           | `export x=5`            |
+
 
 
