@@ -262,5 +262,190 @@ unset MY_VAR
 | Available to child shell | ❌ No                 | ❌ No            | ✅ Yes                   |
 | Example                  | `local x=5`          | `x=5`           | `export x=5`            |
 
+## Bash Operators
+Bash operators are symbols or keywords used to perform operations on variables, strings, files, commands, and arithmetic expressions.
 
+### Arithmetic Operators
+Arithmetic operators work on integers only in Bash (no floating-point natively).
 
+**Different Types of Arithmetic operators**
+| Operator | Description         | Example                     |
+| -------- | ------------------- | --------------------------- |
+| `+`      | Addition            | `((a = 5 + 3))`             |
+| `-`      | Subtraction         | `((a = 5 - 3))`             |
+| `*`      | Multiplication      | `((a = 5 * 3))`             |
+| `/`      | Division            | `((a = 5 / 2)) # result: 2` |
+| `%`      | Modulus (remainder) | `((a = 5 % 2))`             |
+| `**`     | Exponentiation      | `((a = 2 ** 3))`            |
+| `++`     | Increment           | `((a++))`                   |
+| `--`     | Decrement           | `((a--))`                   |
+
+**📌 Important Notes**
+
+- Division truncates decimals
+- No $ needed inside (( ))
+- Returns exit status (0 = true, 1 = false)
+
+### Relational (Comparison) Operators
+Used to compare numbers or strings.
+
+**Numeric Comparison Operators**
+Used with `[[ ]]`, `[ ]`, or `(( ))`.
+
+| Operator | Meaning               |
+| -------- | --------------------- |
+| `-eq`    | equal                 |
+| `-ne`    | not equal             |
+| `-lt`    | less than             |
+| `-le`    | less than or equal    |
+| `-gt`    | greater than          |
+| `-ge`    | greater than or equal |
+
+**Examples:**
+```bash
+if [[ $a -eq $b ]]: then
+    echo "a is equal to b"
+fi
+```
+**✅ Preferred (Cleaner) Numeric Comparison**
+```bash
+if (( a == b )); then
+    echo "a is equal to b"
+fi
+```
+
+**String Comparison Operators**
+
+Used inside `[[ ]]`.
+
+| Operator | Meaning                       |
+| -------- | ----------------------------- |
+| `=`      | equal                         |
+| `!=`     | not equal                     |
+| `<`      | less than (lexicographically) |
+| `>`      | greater than                  |
+| `-z`     | string is empty               |
+| `-n`     | string is not empty           |
+
+**Example:**
+```bash
+if [[ $name = "Alice"]]; then
+    echo "Enter name is Alice"
+fi
+```
+📌 Important
+
+Use [[ ]], not [ ], for < and > to avoid shell redirection issues.
+
+**Logical Operators**
+
+Used to combine conditions.
+
+| Operator | Meaning |   |    |
+| -------- | ------- | - | -- |
+| `&&`     | AND     |   |    |
+| `        |         | ` | OR |
+| `!`      | NOT     |   |    |
+
+**Example:**
+```bash
+if[[ -f files.txt && -r files.txt ]]; then
+    echo "Readable file"
+fi
+```
+**File Test Operators**
+
+Used to test file attributes.
+
+| Operator | Meaning          |
+| -------- | ---------------- |
+| `-e`     | file exists      |
+| `-f`     | regular file     |
+| `-d`     | directory        |
+| `-r`     | readable         |
+| `-w`     | writable         |
+| `-x`     | executable       |
+| `-s`     | file size > 0    |
+| `-L`     | symbolic link    |
+| `-c`     | character device |
+| `-b`     | block device     |
+
+**Let see some examples of the file operators:**
+
+1. Check whether file exists
+```bash
+if [[ -e files.txt ]]; then
+    echo "File exits" #If file is present
+else
+    echo "File not exits!! create file" #If file is not present
+fi
+```
+2. Check whether given path is directory or file
+```bash
+if [[ -d /etc ]]; then
+    echo "The given path is directory"
+else
+    echo "The given path is not directory oops!!!"
+fi
+```
+3. Check the file is readable, writeable, executable
+```bash
+if [[ -rwx start.sh ]]; then
+    echo "The file is readable, writeable, executable"
+else
+    echo "The file not have readable, writeable, executable permission"
+```
+**Bitwise Operators**
+
+Operate on binary representations of integers.
+
+| Operator | Meaning     |    |
+| -------- | ----------- | -- |
+| `&`      | AND         |    |
+| `        | `           | OR |
+| `^`      | XOR         |    |
+| `~`      | NOT         |    |
+| `<<`     | left shift  |    |
+| `>>`     | right shift |    |
+
+**Example:**
+```bash
+((a = 5 & 3))  # 101 & 011 = 001
+```
+**Assignment Operators**
+
+Assign values to variables.
+
+| Operator       | Meaning               |
+| -------------- | --------------------- |
+| `=`            | assign                |
+| `+=`           | append or add         |
+| `-=`           | subtract              |
+| `*=` `/=` `%=` | arithmetic assignment |
+
+**Examples:**
+```bash
+x=5
+((x += 2))    # x = 7
+str="Hello"
+str+=" World"
+```
+**Redirection Operators**
+
+Control input/output streams.
+
+| Operator | Meaning                     |
+| -------- | --------------------------- |
+| `>`      | redirect stdout (overwrite) |
+| `>>`     | redirect stdout (append)    |
+| `<`      | redirect stdin              |
+| `2>`     | redirect stderr             |
+| `2>>`    | append stderr               |
+| `&>`     | redirect stdout + stderr    |
+| `<<`     | here-document               |
+| `<<<`    | here-string                 |
+
+**Example:**
+```bash
+command > output.txt 2> error.txt
+```
