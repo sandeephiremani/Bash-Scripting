@@ -194,9 +194,55 @@ Outside function:
 - `name` exists **Only inside the function** `localfunction`
 - Outside the function, `name` is undefined
 
-### What is Environment Variable
+### What is Environment Variable ?
+In Bash, an environment variable is a named value that is stored in the shell’s environment and is available to the shell and any programs (child processes) it starts.
 
+**Key ideas**
 
+- Environment variables are key–value pairs
+- They are typically used to configure program behavior
+- Child processes inherit environment variables from the parent shell
+
+**Examples of common environment variables**
+```bash
+PATH=/usr/local/bin:/usr/bin:/bin
+HOME=/home/username
+USER=username
+SHELL=/bin/bash
+```
+**Creating an environment variable**
+```bash
+export MY_VAR="hello"
+```
+- `export` makes the variable an environment variable
+- Without `export`, it is only a shell variable
+
+**Using an environment variable**
+```bash
+echo $MY_VAR
+```
+**Difference: shell variable vs environment variable**
+```bash
+MY_VAR=hello        # shell variable (not inherited)
+export MY_VAR=hello # environment variable (inherited)
+```
+**Viewing environment variables**
+```bash
+env
+# or
+printenv
+```
+**Removing an environment variable**
+
+```bash
+unset MY_VAR
+```
+
+**Why environment variables are useful**
+
+- Configure applications (e.g., `JAVA_HOME`, `DATABASE_URL`)
+- Control command behavior (e.g., `PATH`, `LANG`)
+- Pass configuration to scripts without hardcoding values
 
 ### Special Bash variables
 | **Variable**  | **Meaning**                        |
@@ -208,7 +254,7 @@ Outside function:
 | `$?`      | Exit status of last command |
 | `$$`      | Process ID                  |
 
-### 🗝️ Comparison between Local Variable, Global Variable and Environment Variable 
+### 🗝️ Key Comparison between Local Variable, Global Variable and Environment Variable 
 | Feature                  | Local Variable       | Global Variable | Environment Variable    |
 | ------------------------ | -------------------- | --------------- | ----------------------- |
 | Scope                    | Inside function only | Entire script   | Shell + child processes |
